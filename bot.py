@@ -9,7 +9,6 @@ import commands
 import settings
 import model
 
-
 updater = Updater(token=settings.BOT_TOKEN)
 dispatcher = updater.dispatcher
 storage = model.Storage(settings.HOST, settings.DB)
@@ -21,14 +20,20 @@ def start(bot, update):
 
 
 def respond(bot, update):
-    command_handler.command_respond(bot,update)
+    command_handler.command_respond(bot, update)
 
 
-start_handler = CommandHandler('start', start)
-dispatcher.add_handler(start_handler)
+def join(bot, update):
+    command_handler.command_join(bot, update)
 
-echo_handler = MessageHandler(Filters.text, respond)
-dispatcher.add_handler(echo_handler)
+def lang(bot, update, args):
+    command_handler.command_lang(bot, update, args)
+
+
+dispatcher.add_handler(CommandHandler('join', join))
+dispatcher.add_handler(CommandHandler('start', start))
+dispatcher.add_handler(CommandHandler('lang', lang,pass_args=True))
+dispatcher.add_handler(MessageHandler(Filters.text, respond))
 
 # logger.info("Start polling")
 updater.start_polling()
