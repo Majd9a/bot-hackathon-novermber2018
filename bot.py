@@ -6,6 +6,9 @@ from telegram.ext import Updater
 from py_translator import Translator
 from py_translator import LANGUAGES
 import settings
+import model
+
+storage = model.Storage(settings.HOST, settings.DB)
 
 logging.basicConfig(
     format='[%(levelname)s %(asctime)s %(module)s:%(lineno)d] %(message)s',
@@ -13,8 +16,9 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-updater = Updater(token=bot_settings.BOT_TOKEN)
+updater = Updater(token=settings.BOT_TOKEN)
 dispatcher = updater.dispatcher
+
 
 def start(bot, update):
     chat_id = update.message.chat_id
