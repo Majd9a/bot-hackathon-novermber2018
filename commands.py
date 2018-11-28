@@ -55,7 +55,7 @@ class Command:
         for key in langs:
             kb.append([telegram.KeyboardButton("/lang " + key)])
 
-        kb_markup = telegram.ReplyKeyboardMarkup(kb, resize_keyboard=True, one_time_keyboard=True)
+        kb_markup = telegram.ReplyKeyboardMarkup(kb, resize_keyboard=True,one_time_keyboard=True)
         bot.send_message(chat_id=update.message.chat_id,
                          text="Welcome!",
                          reply_markup=kb_markup)
