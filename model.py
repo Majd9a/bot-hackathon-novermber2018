@@ -7,18 +7,27 @@ class Storage:
         self.client = MongoClient(host)
         self.db = self.client.get_database(db)
         self.users = self.db.get_collection("users")
-        self.lists.create_index("id_room", unique=True)
+        self.logs = self.db.get_collection("logs")
+
+        self.users.create_index("id_room", unique=True)
 
     def create_list_users(self, id_room):
         self.users.replace_one({'id_room': id_room}, {
             'id_room': id_room,
             'users': [],
+            'logs': [],
         }, upsert=True)
 
     # details :id_user, first_name, last_name, language
-    def add_item_to_list(self, id_room, user):
+    def add_user_to_list(self, id_room, user):
         self.lists.update_one({'id_room': id_room}, {
-            '$push': {'users': user}
+            '$push': {'users': user},
+        })
+
+    # logs :mesg, sender , time
+    def add_user_to_list(self, id_room, msg, sender, time):
+        self.lists.update_one({'id_room': id_room}, {
+            '$push': {'logs': [msg, sender, time]},
         })
 
     def get_doc(self, id_room):
