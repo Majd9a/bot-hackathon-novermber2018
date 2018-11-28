@@ -7,7 +7,7 @@ from py_translator import Translator
 from py_translator import LANGUAGES
 import settings
 
-chats=['650305195','596881935']
+chats=['650305195;en','596881935;ar','575565672;iw']
 logging.basicConfig(
     format='[%(levelname)s %(asctime)s %(module)s:%(lineno)d] %(message)s',
     level=logging.INFO)
@@ -27,10 +27,11 @@ def respond(bot, update):
     chat_id = update.message.chat_id
     text = update.message.text
     logger.info(f"= Got on chat #{chat_id}: {text!r}")
-    response = Translator().translate(text, dest='iw').text
+
     # bot.send_message(chat_id=update.message.chat_id, text=response)
     for c in chats:
-        if not (int(c) == chat_id):
+        if not (int(c.split(';')[0]) == chat_id):
+            response = Translator().translate(text, dest=c.split(';')[1]).text
             print (f"c = {type(c)}")
             print (f"c1 = {type(chat_id)}")
             bot.send_message(chat_id=c, text= update.message['from_user']['first_name'] +" : " +response)
