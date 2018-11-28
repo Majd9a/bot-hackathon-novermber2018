@@ -10,33 +10,21 @@ class Storage:
         self.logs = self.db.get_collection("logs")
         # self.users.create_index("chat_id")
 
-
-    def create_list(self, chat_id, language):
-        self.users.replace_one({'chat_id': chat_id}, {
-            'chat_id': chat_id,
-            'language': language,
-        }, upsert=True)
-
-    def add_user(self, chat_id, language):
-        tmp = {"_id": chat_id,"$set": { 'language': language}}
-        if not tmp in self.users.find({"_id":chat_id}):
-            self.users.update_one({"_id": chat_id},{"$set": { 'language': language}},upsert=True)
+    def add_user(self, chat_id, language, first_name, last_name):
+        tmp = {"_id": chat_id, "$set": {'language': language, 'first_name': first_name, 'last_name': last_name}}
+        if not tmp in self.users.find({"_id": chat_id}):
+            self.users.update_one({"_id": chat_id},
+                                  {"$set": {'language': language, 'first_name': first_name, 'last_name': last_name}},
+                                  upsert=True)
+    def get_users(self):
+        memebrs = []
         for i in self.users.find():
-            print(i)
+            memebrs.append(i['first_name'] + " " + i['last_name'])
+        return memebrs
 
-    # logs :mesg, sender , time
-    # def add_log_to_logs(self, id_room, msg, sender, time):
-    #     self.users.update_one({'id_room': id_room}, {
-    #         '$push': {'logs': [msg, sender, time]},
-    #     })
-
-    # def get_doc(self, id_room):
-    #     return self.users.find_one({'id_room': id_room})
-    #
-    # def count_users(self, id_room):
-    #     doc = self.get_doc(id_room)
-    #     return len(doc['users'])
-    #
-    # def get_users(self, id_room):
-    #     doc = self.get_doc(id_room)
-    #     return doc['users']
+    # def add_user(self language, first_name, last_name):
+    #     tmp = { "$set": {'language': language, 'first_name': first_name, 'last_name': last_name}}
+    #     if not tmp in self.users.find({"_id": chat_id}):
+    #         self.users.update_one({"_id": chat_id},
+    #                               {"$set": {'language': language, 'first_name': first_name, 'last_name': last_name}},
+    #                               upsert=True)
