@@ -26,13 +26,19 @@ def respond(bot, update):
 def join(bot, update):
     command_handler.command_join(bot, update)
 
+
+def memebers(bot, update):
+    command_handler.command_memebers(bot, update)
+
+
 def lang(bot, update, args):
     command_handler.command_lang(bot, update, args)
 
 
 dispatcher.add_handler(CommandHandler('join', join))
 dispatcher.add_handler(CommandHandler('start', start))
-dispatcher.add_handler(CommandHandler('lang', lang,pass_args=True))
+dispatcher.add_handler(CommandHandler('lang', lang, pass_args=True))
+dispatcher.add_handler(CommandHandler('members', memebers))
 dispatcher.add_handler(MessageHandler(Filters.text, respond))
 
 # logger.info("Start polling")

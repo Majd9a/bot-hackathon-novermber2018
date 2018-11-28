@@ -11,6 +11,10 @@ class Storage:
         # self.users.create_index("chat_id")
 
     def add_user(self, chat_id, language, first_name, last_name):
+        if not last_name:
+            last_name = " "
+        if not first_name:
+            first_name = " "
         tmp = {"_id": chat_id, "$set": {'language': language, 'first_name': first_name, 'last_name': last_name}}
         if not tmp in self.users.find({"_id": chat_id}):
             self.users.update_one({"_id": chat_id},

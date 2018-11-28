@@ -1,5 +1,7 @@
 import telegram
 from py_translator import Translator, LANGUAGES
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+
 from messages import messages
 import model
 import settings
@@ -49,13 +51,23 @@ class Command:
         language = args[0]
         self.storage.add_user(chat_id, language, first_name, last_name)
 
+    def command_memebers(self, bot, update):
+        members = self.storage.get_users()  # return list of string
+
+        keyboard = []
+        for i, mem in enumerate(members):
+            keyboard.append([InlineKeyboardButton(mem, callback_data=f"{i}")])
+
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        update.message.reply_text('Members:', reply_markup=reply_markup)
+
     def command_join(self, bot, update):
         kb = []
         langs = sorted(LANGUAGES.keys())
         for key in langs:
             kb.append([telegram.KeyboardButton("/lang " + key)])
 
-        kb_markup = telegram.ReplyKeyboardMarkup(kb, resize_keyboard=True,one_time_keyboard=True)
+        kb_markup = telegram.ReplyKeyboardMarkup(kb, resize_keyboard=True, one_time_keyboard=True)
         bot.send_message(chat_id=update.message.chat_id,
                          text="Welcome!",
                          reply_markup=kb_markup)
