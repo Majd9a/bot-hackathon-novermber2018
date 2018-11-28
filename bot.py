@@ -7,7 +7,7 @@ from py_translator import Translator
 from py_translator import LANGUAGES
 import settings
 
-chats=['650305195;en','596881935;ar','575565672;iw']
+chats=['650305195;en','596881935;ar','575565672;:iw']
 logging.basicConfig(
     format='[%(levelname)s %(asctime)s %(module)s:%(lineno)d] %(message)s',
     level=logging.INFO)
