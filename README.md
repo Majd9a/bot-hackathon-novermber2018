@@ -1,9 +1,10 @@
 # {YOUR BOT NAME HERE}
 {ONE LINE BOT DESCRIPTION HERE} <https://t.me/{BOT_ID}>
 
-* {Participant 1 Name}
-* {Participant 2 Name}
-* {Participant 3 Name}
+* Ahmad Sabbah
+* Rashid Khamis
+* Odai Odeh
+* Majd AbuHattoum
 
 {OPTIONAL: MORE PROJECT INFO}
 
