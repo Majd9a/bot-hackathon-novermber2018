@@ -20,8 +20,10 @@ Multilingual Translation Bot <https://t.me/MultiLangGroupBot>
 ## Screenshots
 Start command
 <img src="screenshots/command_start.jpg" alt="drawing" width="350"/>
+<br><br>
 Change language command
 <img src="screenshots/command_change_land.jpg" alt="drawing" width="350"/>
+<br><br>
 Join room command
 <img src="screenshots/command_join.jpg" alt="drawing" width="350"/>
 
