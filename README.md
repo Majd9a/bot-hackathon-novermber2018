@@ -10,6 +10,8 @@ Multilingual Translation Bot <https://t.me/MultiLangGroupBot>
 **AMORE Bot** is a friendly Telegram chatbot that enables users to have a multilingual translation of chats on the fly, connecting people from all over the world!
 
 
+
+
 ## Features
 - Simultaneous translation of more than 100 languages
 - Create and join chat rooms.
