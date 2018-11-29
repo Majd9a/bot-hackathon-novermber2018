@@ -14,6 +14,5 @@ class messages:
         # get all chats numbers from db for specific room_id
         users = self.storage.users.find({"room_id":room_id})
         for user in users:
-            print(user['_id'])
             self.send_to(user['_id'])
 

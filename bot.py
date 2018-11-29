@@ -34,11 +34,6 @@ def memebers(bot, update):
 def lang(bot, update, args):
     command_handler.command_lang(bot, update, args)
 
-
-def create(bot, update):
-    command_handler.command_create(bot, update)
-
-
 def join(bot, update, args):
     command_handler.command_join(bot, update, args)
 
@@ -46,14 +41,16 @@ def join(bot, update, args):
 def create(bot, update, args):
     command_handler.command_create(bot, update, args)
 
+def help(bot, update):
+    command_handler.command_help(bot, update)
 
 dispatcher.add_handler(CommandHandler('start', start))
 dispatcher.add_handler(CommandHandler('join', join, pass_args=True))
 dispatcher.add_handler(CommandHandler('create', create, pass_args=True))
 dispatcher.add_handler(CommandHandler('change_lang', change_lang))
-
 dispatcher.add_handler(CommandHandler('lang', lang, pass_args=True))
 dispatcher.add_handler(CommandHandler('members', memebers))
+dispatcher.add_handler(CommandHandler('help', help))
 dispatcher.add_handler(MessageHandler(Filters.text, respond))
 
 # logger.info("Start polling")

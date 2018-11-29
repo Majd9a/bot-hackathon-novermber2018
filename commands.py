@@ -1,11 +1,13 @@
 import telegram
 from py_translator import Translator, LANGUAGES
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
+import goslate
 from messages import messages
 import model
 import settings
 import logging
+from googletrans import Translator  # Import Translator module from googletrans package
+from MessageBold import messageBold
 
 
 class Command:
@@ -28,11 +30,11 @@ class Command:
 
         if not self.storage.users.find_one({"_id": chat_id}):
             self.storage.add_user(chat_id, language, first_name, last_name)
-
+        str = Command.getHelp()
         kb = [[telegram.KeyboardButton("/change_lang")]]
         kb_markup = telegram.ReplyKeyboardMarkup(kb, resize_keyboard=True)
         bot.send_message(chat_id=update.message.chat_id,
-                         text=f"Hello {first_name}, and welcome to the multi language bot!",
+                         text=f"Hello {first_name}, and welcome to the multi language bot!\n" + str ,
                          reply_markup=kb_markup)
 
     # def command_create(self,bot, update,args):
@@ -54,20 +56,18 @@ class Command:
         members = self.storage.users.find()  # return list of string
         user_id = update.message.chat_id
         curr_room_id = self.storage.users.find_one({"_id": user_id})['room_id']
-        print(members)
 
         keyboard = []
         for j, i in enumerate(members):
             if (i['room_id'] == curr_room_id):
                 keyboard.append([InlineKeyboardButton(i['first_name'] + " " + i['last_name'], callback_data=f"{j}")])
         reply_markup = InlineKeyboardMarkup(keyboard)
-        update.message.reply_text(f'Members of {curr_room_id}:', reply_markup=reply_markup)
+        update.message.reply_text(f'Members of *{curr_room_id}*', reply_markup=reply_markup, parse_mode=ParseMode.MARKDOWN)
 
     def command_join(self, bot, update, args):
         room_id = args[0]
         chat_id = update.message.chat_id
         prev_room_id = self.storage.users.find_one({"_id": chat_id})['room_id']
-        print(self.storage.users.find_one({"_id": chat_id})['room_id'])
 
         if self.storage.rooms.find_one({"_id": room_id}):
             self.storage.users.update_one({"_id": chat_id},
@@ -94,11 +94,31 @@ class Command:
             self.storage.rooms.update_one({"_id": room_id},
                                           {"$set": {"created_by": update.message.chat_id}},
                                           upsert=True)
-            msg = messages(f"Room name {room_id} has been successfully created", bot)
+            msg = messages(f"Room {room_id} has been successfully created", bot)
             msg.send_to(update.message.chat_id)
         else:
-            msg = messages(f"Room name {room_id} already exists ", bot)
+            msg = messages(f"Room {room_id} already exists ", bot)
             msg.send_to(update.message.chat_id)
+
+    @classmethod
+    def getHelp(cls):
+        commands = {
+            '/start': "starts the bot and be in General_Room",
+            '/create [room key]': "creates a room ",
+            '/join [room key]': "join a room",
+            '/members': "show all members in the group",
+            '/Change_lang': "change the language , given a list of languages",
+            '/lang [language symbole]': "change the language by writing the lang symbol",
+            '/help': "get all commands",
+        }
+        str = ''
+        for key, value in commands.items():
+            str += key + " : " + value + "\n"
+        return str
+
+    def command_help(self, bot, update):
+        str = Command.getHelp()
+        messages(str, bot).send_to(update.message.chat_id)
 
     def command_change_lang(self, bot, update):
         kb = []
@@ -126,13 +146,18 @@ class Command:
         ##get the room that user uses
         self.logger.info(f"= Got on chat #{user_id}: {text!r}")
         curr_room_id = self.storage.users.find_one({"_id": user_id})['room_id']
-        print(curr_room_id)
         for i in self.storage.users.find():
             userId = int(i['_id'])
             if not (userId == user_id):
                 if (i['room_id'] == curr_room_id):
                     ## translate to user lang
+
                     response = Translator().translate(text, dest=i['language']).text
+                    # response = goslate.Goslate().translate(text, i['language'])
+                    # response = Translator().translate('text', src='en', dest=i['language'])
                     ## send to users
-                    msg = messages(update.message['from_user']['first_name'] + " : " + response, bot)
+                    msg = messageBold("*"+update.message['from_user']['first_name']+"*" + " \n"  + response, bot)
                     msg.send_to(userId)
+
+                    # bot.send_message(chat_id=update.message.chat_id, parse_mode=ParseMode.,
+                    #                  text=f"*{user_name}* {flag('us')}\nI'm a bot, please talk to me!")
