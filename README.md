@@ -40,3 +40,4 @@ To run the bot use:
 ## Credits and References
 * [Telegram Docs](https://core.telegram.org/bots)
 * [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot)
+* [py-translator](https://pypi.org/project/py-translator)
