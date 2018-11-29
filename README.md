@@ -18,13 +18,13 @@ Multilingual Translation Bot <https://t.me/MultiLangGroupBot>
 - Friendly interface 
 
 ## Screenshots
-Start command
+### Start command
 <img src="screenshots/command_start.jpg" alt="drawing" width="350"/>
 <br><br>
-Change language command
+### Change language command
 <img src="screenshots/command_change_land.jpg" alt="drawing" width="350"/>
 <br><br>
-Join room command
+### Join room command
 <img src="screenshots/command_join.jpg" alt="drawing" width="350"/>
 
 ## How to Run This Bot
