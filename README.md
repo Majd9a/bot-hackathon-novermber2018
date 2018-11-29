@@ -18,7 +18,7 @@ Multilingual Translation Bot <https://t.me/MultiLangGroupBot>
 - Friendly interface 
 
 ## Screenshots
-![SCREESHOT DECSRIPTION](screenshots/command_start.jpg)
+![SCREESHOT DECSRIPTION](screenshots/command_start.jpg=350x)
 
 ## How to Run This Bot
 ### Prerequisites
