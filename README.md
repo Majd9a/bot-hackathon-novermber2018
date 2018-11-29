@@ -5,6 +5,7 @@ Multilingual Translation Bot <https://t.me/MultiLangGroupBot>
 * Odai Odeh
 * Majd AbuHattoum
 
+<br><br>
 <a href="https://t.me/MultiLangGroupBot"><img src="https://www.botcide.com/wp-content/uploads/2018/07/bot_icon_240_001-1.png" align="left" hspace="5" vspace="3" width="90"></a>
 
 <br><br>
