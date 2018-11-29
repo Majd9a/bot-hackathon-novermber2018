@@ -123,8 +123,14 @@ class Command:
     def command_change_lang(self, bot, update):
         kb = []
         langs = sorted(LANGUAGES.keys())
-        for key in langs:
-            kb.append([telegram.KeyboardButton("/lang " + key)])
+        OFFSET = 127462 - ord('A')
+        def flag(code):
+            code = code.upper()
+            return chr(ord(code[0]) + OFFSET) + chr(ord(code[1]) + OFFSET)
+
+        for key,value in LANGUAGES.items():
+            f = settings.lang_dic[key] if key in settings.lang_dic else 'en'
+            kb.append([telegram.KeyboardButton("/lang " + key + " " + value.upper() + " " + flag(f))])
 
         kb_markup = telegram.ReplyKeyboardMarkup(kb, resize_keyboard=True, one_time_keyboard=True)
         bot.send_message(chat_id=update.message.chat_id,
