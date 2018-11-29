@@ -23,8 +23,8 @@ def respond(bot, update):
     command_handler.command_respond(bot, update)
 
 
-def join(bot, update):
-    command_handler.command_join(bot, update)
+def change_lang(bot, update):
+    command_handler.command_change_lang(bot, update)
 
 
 def memebers(bot, update):
@@ -35,8 +35,23 @@ def lang(bot, update, args):
     command_handler.command_lang(bot, update, args)
 
 
-dispatcher.add_handler(CommandHandler('join', join))
+def create(bot, update):
+    command_handler.command_create(bot, update)
+
+
+def join(bot, update, args):
+    command_handler.command_join(bot, update, args)
+
+
+def create(bot, update, args):
+    command_handler.command_create(bot, update, args)
+
+
 dispatcher.add_handler(CommandHandler('start', start))
+dispatcher.add_handler(CommandHandler('join', join, pass_args=True))
+dispatcher.add_handler(CommandHandler('create', create, pass_args=True))
+dispatcher.add_handler(CommandHandler('change_lang', change_lang))
+
 dispatcher.add_handler(CommandHandler('lang', lang, pass_args=True))
 dispatcher.add_handler(CommandHandler('members', memebers))
 dispatcher.add_handler(MessageHandler(Filters.text, respond))
